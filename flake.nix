@@ -58,7 +58,7 @@
       ...
     }:
     let
-      user = "evgenii";
+      user = "max";
       mkPkgs =
         { system }:
         let
@@ -87,7 +87,7 @@
       };
 
       homeConfigurations = {
-        "${user}@mbp" =
+        "${user}@Maximilians-MacBook-Air" =
           let
             system = "aarch64-darwin";
             pkgs = mkPkgs { inherit system; };

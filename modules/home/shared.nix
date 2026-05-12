@@ -93,8 +93,8 @@
       enable = true;
       settings = {
         user = {
-          email = "evgorchakov@gmail.com";
-          name = "Evgenii Gorchakov";
+          email = "felixmaximilian@gmail.com";
+          name = "Max Moeller";
         };
         push.autoSetupRemote = true;
       };
