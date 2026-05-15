@@ -13,10 +13,6 @@
         path = "${config.home.homeDirectory}/.ssh/id_github_felixmaximilian";
         mode = "0600";
       };
-      "ssh/private-mac-git-key" = {
-        path = "${config.home.homeDirectory}/.ssh/private-mac-git-key";
-        mode = "0600";
-      };
       "ssh/yaak_gpu_cluster" = {
         path = "${config.home.homeDirectory}/.ssh/yaak_gpu_cluster";
         mode = "0600";
@@ -45,7 +41,6 @@
 
   home.file = {
     ".ssh/id_github_felixmaximilian.pub".source = ../../secrets/public_keys/id_github_felixmaximilian.pub;
-    ".ssh/private-mac-git-key.pub".source = ../../secrets/public_keys/private-mac-git-key.pub;
     ".ssh/yaak_gpu_cluster.pub".source = ../../secrets/public_keys/yaak_gpu_cluster.pub;
   };
 
