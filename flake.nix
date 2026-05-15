@@ -35,6 +35,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    sops-nix = {
+      url = "github:mic92/sops-nix?shallow=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     systems.url = "github:nix-systems/default?shallow=1";
   };
 
@@ -52,6 +57,7 @@
       home-manager,
       llm-agents,
       lumen,
+      sops-nix,
       stylix,
       treefmt-nix,
       systems,
@@ -99,6 +105,7 @@
                 user
                 llm-agents
                 lumen
+                sops-nix
                 stylix
                 ;
             };
@@ -117,6 +124,7 @@
                 user
                 llm-agents
                 lumen
+                sops-nix
                 stylix
                 ;
             };

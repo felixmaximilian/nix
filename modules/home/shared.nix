@@ -4,10 +4,14 @@
   stylix,
   llm-agents,
   lumen,
+  sops-nix,
   ...
 }:
 {
-  imports = [ stylix.homeModules.stylix ];
+  imports = [
+    stylix.homeModules.stylix
+    sops-nix.homeModules.sops-nix
+  ];
 
   news.display = "silent";
   home = {
@@ -19,6 +23,8 @@
       dust
       ouch
       rsync
+      age
+      sops
       lumen.packages.${pkgs.stdenv.hostPlatform.system}.lumen
     ];
 
