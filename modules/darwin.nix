@@ -74,11 +74,16 @@
       "spotify"
       "display-pilot"
       "alfred"
+      "discord"
       "docker"
+      "meetingbar"
       "microsoft-teams"
+      "obsidian"
       "sublime-text"
       "tailscale"
+      "visual-studio-code"
       "vnc-viewer"
+      "zoom"
     ];
     brews = [ "TeddyHuang-00/app/sshping" ];
     onActivation = {

@@ -29,11 +29,6 @@
       chatgpt
       bitwarden-desktop
       slack
-      discord
-      meetingbar
-      obsidian
-      vscode
-      zoom-us
       # telegram-desktop
       # rerun
     ];
