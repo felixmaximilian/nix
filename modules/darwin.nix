@@ -18,6 +18,28 @@
     primaryUser = user;
     configurationRevision = self.rev or self.dirtyRev or null;
     stateVersion = 6;
+
+    defaults = {
+      dock = {
+        tilesize = 40;
+      };
+
+      finder = {
+        ShowStatusBar = true;
+        FXPreferredViewStyle = "Nlsv";
+      };
+
+      NSGlobalDomain = {
+        "com.apple.swipescrolldirection" = false;
+        KeyRepeat = 2;
+        InitialKeyRepeat = 25;
+      };
+
+      trackpad = {
+        Clicking = true;
+        TrackpadThreeFingerDrag = true;
+      };
+    };
   };
 
   environment.shells = with pkgs; [
