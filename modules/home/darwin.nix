@@ -1,9 +1,28 @@
-{ pkgs, user, ... }:
+{ pkgs, user, config, ... }:
 {
   imports = [
     ./shared.nix
     ./gui.nix
   ];
+
+  sops = {
+    age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+    defaultSopsFile = ../../secrets/secrets.yaml;
+    secrets = {
+      "ssh/id_github_felixmaximilian" = {
+        path = "${config.home.homeDirectory}/.ssh/id_github_felixmaximilian";
+        mode = "0600";
+      };
+      "ssh/private-mac-git-key" = {
+        path = "${config.home.homeDirectory}/.ssh/private-mac-git-key";
+        mode = "0600";
+      };
+      "ssh/yaak_gpu_cluster" = {
+        path = "${config.home.homeDirectory}/.ssh/yaak_gpu_cluster";
+        mode = "0600";
+      };
+    };
+  };
 
   home = {
     username = user;
@@ -24,7 +43,64 @@
     ];
   };
 
+  home.file = {
+    ".ssh/id_github_felixmaximilian.pub".source = ../../secrets/public_keys/id_github_felixmaximilian.pub;
+    ".ssh/private-mac-git-key.pub".source = ../../secrets/public_keys/private-mac-git-key.pub;
+    ".ssh/yaak_gpu_cluster.pub".source = ../../secrets/public_keys/yaak_gpu_cluster.pub;
+  };
+
   programs = {
+    ssh = {
+      enable = true;
+      matchBlocks = {
+        "*github.com" = {
+          identityFile = "~/.ssh/id_github_felixmaximilian";
+          extraOptions.AddKeysToAgent = "yes";
+        };
+        "luna" = {
+          hostname = "192.168.178.81";
+          user = "max";
+          identityFile = "~/.ssh/id_github_felixmaximilian";
+          identitiesOnly = true;
+        };
+        "luna.tailscale" = {
+          hostname = "luna.tail1b8446.ts.net";
+          user = "max";
+          identityFile = "~/.ssh/id_github_felixmaximilian";
+          identitiesOnly = true;
+        };
+        "*.ml *.kit" = {
+          identityFile = "~/.ssh/yaak_gpu_cluster";
+          forwardAgent = true;
+          extraOptions = {
+            AddKeysToAgent = "yes";
+            UseKeychain = "yes";
+            AddressFamily = "inet";
+            Compression = "yes";
+            ControlMaster = "auto";
+            ControlPath = "~/.ssh/master-%r@%h:%p.socket";
+            ControlPersist = "60m";
+            RemoteForward = "9876 localhost:9876";
+            LocalForward = "8080 localhost:8080";
+          };
+        };
+        "*" = {
+          serverAliveInterval = 60;
+          serverAliveCountMax = 3;
+          extraOptions.SetEnv = "TERM=xterm-256color";
+        };
+        "aboutblank.ml".hostname = "192.168.207.247";
+        "renate.ml".hostname = "192.168.207.246";
+        "berghain.ml".hostname = "192.168.207.244";
+        "tresor.ml".hostname = "192.168.207.242";
+        "sisyphos.ml".hostname = "192.168.207.241";
+        "kitkat.ml".hostname = "192.168.207.239";
+        "delta-dev1.kit".hostname = "192.168.144.35";
+        "delta-emc1.kit".hostname = "172.30.0.40";
+      };
+      extraConfig = "ServerAliveInterval 120";
+    };
+
     aerospace = {
       enable = true;
       launchd.enable = true;
