@@ -57,7 +57,6 @@
       home-manager,
       llm-agents,
       lumen,
-      sops-nix,
       stylix,
       treefmt-nix,
       systems,
@@ -105,11 +104,13 @@
                 user
                 llm-agents
                 lumen
-                sops-nix
                 stylix
                 ;
             };
-            modules = [ ./modules/home/darwin.nix ];
+            modules = [
+              ./modules/home/darwin.nix
+              inputs."sops-nix".homeModules.sops-nix
+            ];
           };
 
         "${user}@arch" =
@@ -124,7 +125,6 @@
                 user
                 llm-agents
                 lumen
-                sops-nix
                 stylix
                 ;
             };

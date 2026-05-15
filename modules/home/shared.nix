@@ -4,14 +4,10 @@
   stylix,
   llm-agents,
   lumen,
-  sops-nix,
   ...
 }:
 {
-  imports = [
-    stylix.homeModules.stylix
-    sops-nix.homeModules.sops-nix
-  ];
+  imports = [ stylix.homeModules.stylix ];
 
   news.display = "silent";
   home = {
