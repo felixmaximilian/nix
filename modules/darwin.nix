@@ -51,6 +51,12 @@
       "uhk-agent"
       "spotify"
       "display-pilot"
+      "alfred"
+      "docker"
+      "microsoft-teams"
+      "sublime-text"
+      "tailscale"
+      "vnc-viewer"
     ];
     brews = [ "TeddyHuang-00/app/sshping" ];
     onActivation = {
