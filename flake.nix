@@ -113,6 +113,27 @@
             ];
           };
 
+        "${user}@Maxs-Yaak-Device" =
+          let
+            system = "aarch64-darwin";
+            pkgs = mkPkgs { inherit system; };
+          in
+          home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = {
+              inherit
+                user
+                llm-agents
+                lumen
+                stylix
+                ;
+            };
+            modules = [
+              ./modules/home/darwin.nix
+              inputs."sops-nix".homeManagerModule
+            ];
+          };
+
         "${user}@arch" =
           let
             system = "x86_64-linux";
