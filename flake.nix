@@ -109,7 +109,7 @@
             };
             modules = [
               ./modules/home/darwin.nix
-              inputs."sops-nix".homeModules.sops-nix
+              inputs."sops-nix".homeManagerModule
             ];
           };
 
