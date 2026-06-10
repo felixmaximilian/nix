@@ -20,6 +20,11 @@
       };
     };
 
+    claude-code = {
+      url = "github:sadjow/claude-code-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # TODO: https://github.com/NixOS/nixpkgs/pull/484661
     lumen = {
       url = "github:jnsahaj/lumen?shallow=1";
@@ -44,8 +49,14 @@
   };
 
   nixConfig = {
-    extra-substituters = [ "https://cache.numtide.com" ];
-    extra-trusted-public-keys = [ "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=" ];
+    extra-substituters = [
+      "https://cache.numtide.com"
+      "https://claude-code.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+      "claude-code.cachix.org-1:YeXf2aNu7UTX8Vwrze0za1WEDS+4DuI2kVeWEE4fsRk="
+    ];
   };
 
   outputs =
@@ -56,6 +67,7 @@
       nixpkgs-master,
       home-manager,
       llm-agents,
+      claude-code,
       lumen,
       stylix,
       treefmt-nix,
@@ -103,6 +115,7 @@
               inherit
                 user
                 llm-agents
+                claude-code
                 lumen
                 stylix
                 ;
@@ -124,6 +137,7 @@
               inherit
                 user
                 llm-agents
+                claude-code
                 lumen
                 stylix
                 ;
@@ -145,6 +159,7 @@
               inherit
                 user
                 llm-agents
+                claude-code
                 lumen
                 stylix
                 ;
@@ -163,6 +178,7 @@
             inherit
               user
               llm-agents
+              claude-code
               lumen
               stylix
               ;

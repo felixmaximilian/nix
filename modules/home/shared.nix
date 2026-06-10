@@ -3,6 +3,7 @@
   pkgs,
   stylix,
   llm-agents,
+  claude-code,
   lumen,
   ...
 }:
@@ -87,7 +88,7 @@
 
     claude-code = {
       enable = true;
-      package = llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code;
+      package = claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default;
     };
 
     direnv = {
