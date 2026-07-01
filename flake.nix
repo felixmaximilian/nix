@@ -2,6 +2,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable?shallow=1";
     nixpkgs-master.url = "github:nixos/nixpkgs/master?shallow=1";
+    # Pinned to the pre-2026-06-30 nixpkgs rev for packages that regress on
+    # newer unstable: bitwarden-desktop (newer ships on EOL electron-39) and
+    # iosevka (34.7.0 fails to build from source on darwin, Abort trap 6).
+    nixpkgs-pinned.url = "github:nixos/nixpkgs/b3da656039dc7a6240f27b2ef8cc6a3ef3bccae7";
     darwin = {
       url = "github:nix-darwin/nix-darwin?shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -65,6 +69,7 @@
       darwin,
       nixpkgs,
       nixpkgs-master,
+      nixpkgs-pinned,
       home-manager,
       llm-agents,
       claude-code,
@@ -83,11 +88,20 @@
             inherit system;
             config.allowUnfree = true;
           };
+          pkgsPinned = import nixpkgs-pinned {
+            inherit system;
+            config.allowUnfree = true;
+          };
         in
         import nixpkgs {
           inherit system;
           config.allowUnfree = true;
-          overlays = [ (_: _prev: { inherit (pkgsMaster) chatgpt; }) ];
+          overlays = [
+            (_: _prev: {
+              inherit (pkgsMaster) chatgpt;
+              inherit (pkgsPinned) bitwarden-desktop iosevka;
+            })
+          ];
         };
       eachSystem = f: nixpkgs.lib.genAttrs (import systems) (system: f nixpkgs.legacyPackages.${system});
       treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./treefmt.nix);
