@@ -133,6 +133,7 @@
           alt-shift-0 = "move-node-to-workspace 10";
           alt-tab = "workspace-back-and-forth";
           alt-shift-tab = "move-workspace-to-monitor --wrap-around next";
+          alt-shift-f = "macos-native-fullscreen";
           alt-shift-semicolon = "mode service";
         };
         mode.service.binding = {
@@ -171,38 +172,56 @@
         };
         workspace-to-monitor-force-assignment = {
           "1" = [
+            "^DELL .*"
+            "^DELL P3222QE$"
+	    "^U32H85x$"
             "^PHL 346B1C$"
             "^DELL U2422H$"
             "^BenQ RD320U$"
             "built-in"
           ];
           "2" = [
+            "^DELL .*"
+            "^DELL P3222QE$"
+	    "^U32H85x$"
             "^PHL 346B1C$"
             "^DELL U2422H$"
             "^BenQ RD320U$"
             "built-in"
           ];
           "3" = [
+            "^DELL .*"
+            "^DELL P3222QE$"
+	    "^U32H85x$"
             "^PHL 346B1C$"
             "^BenQ RD320U$"
             "built-in"
           ];
           "4" = [
+            "^DELL .*"
+            "^DELL P3222QE$"
+	    "^U32H85x$"
             "^PHL 346B1C$"
             "^BenQ RD320U$"
             "built-in"
           ];
           "5" = [
+            "^DELL .*"
+            "^DELL P3222QE$"
+	    "^U32H85x$"
             "^PHL 346B1C$"
             "^BenQ RD320U$"
             "built-in"
           ];
           "6" = [
+            "^DELL .*"
+            "^DELL P3222QE$"
+	    "^U32H85x$"
             "^PHL 346B1C$"
             "^BenQ RD320U$"
             "built-in"
           ];
-          "7" = [ "built-in" ];
+          "7" = [ "^DELL P3222QE$" "built-in" ];
           "8" = [ "built-in" ];
           "9" = [ "built-in" ];
           "10" = [ "built-in" ];
