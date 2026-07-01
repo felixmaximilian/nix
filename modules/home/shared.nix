@@ -18,6 +18,7 @@
       tig
       just
       dust
+      ffmpeg
       ouch
       rsync
       age
