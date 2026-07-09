@@ -8,9 +8,27 @@
       settings = {
         command = "${pkgs.bashInteractive}/bin/bash -l -c nu";
         window-inherit-working-directory = true;
-        window-decoration = false;
+        window-decoration = "auto";
+        macos-titlebar-style = "hidden";
         focus-follows-mouse = true;
         shell-integration-features = "sudo,ssh-env,ssh-terminfo";
+
+        macos-option-as-alt = true;
+        macos-non-native-fullscreen = true;
+        window-save-state = "never";
+        keybind = [ "global:cmd+grave_accent=toggle_quick_terminal" ];
+
+        copy-on-select = "clipboard";
+        confirm-close-surface = false;
+        scrollback-limit = 314572800; # 300 MiB
+
+        background-opacity = 0.95;
+        background-blur-radius = 20;
+        window-padding-x = 6;
+        window-padding-y = 6;
+        window-padding-balance = true;
+        unfocused-split-opacity = 0.85;
+        font-thicken = true;
       };
     };
     sioyek = {
