@@ -42,53 +42,49 @@
   programs = {
     ssh = {
       enable = true;
-      matchBlocks = {
+      enableDefaultConfig = false;
+      settings = {
         "*github.com" = {
-          identityFile = "~/.ssh/id_github_felixmaximilian";
-          extraOptions.AddKeysToAgent = "yes";
+          IdentityFile = "~/.ssh/id_github_felixmaximilian";
+          AddKeysToAgent = "yes";
         };
         "luna" = {
-          hostname = "192.168.178.81";
-          user = "max";
-          identityFile = "~/.ssh/id_github_felixmaximilian";
-          identitiesOnly = true;
+          HostName = "192.168.178.81";
+          User = "max";
+          IdentityFile = "~/.ssh/id_github_felixmaximilian";
+          IdentitiesOnly = true;
         };
         "luna.tailscale" = {
-          hostname = "luna.tail1b8446.ts.net";
-          user = "max";
-          identityFile = "~/.ssh/id_github_felixmaximilian";
-          identitiesOnly = true;
+          HostName = "luna.tail1b8446.ts.net";
+          User = "max";
+          IdentityFile = "~/.ssh/id_github_felixmaximilian";
+          IdentitiesOnly = true;
         };
         "*.ml *.kit" = {
-          identityFile = "~/.ssh/yaak_gpu_cluster";
-          forwardAgent = true;
-          extraOptions = {
-            AddKeysToAgent = "yes";
-            UseKeychain = "yes";
-            AddressFamily = "inet";
-            Compression = "yes";
-            ControlMaster = "auto";
-            ControlPath = "~/.ssh/master-%r@%h:%p.socket";
-            ControlPersist = "60m";
-            RemoteForward = "9876 localhost:9876";
-            LocalForward = "8080 localhost:8080";
-          };
+          IdentityFile = "~/.ssh/yaak_gpu_cluster";
+          ForwardAgent = true;
+          AddKeysToAgent = "yes";
+          UseKeychain = "yes";
+          AddressFamily = "inet";
+          Compression = true;
+          ControlMaster = "auto";
+          ControlPath = "~/.ssh/master-%r@%h:%p.socket";
+          ControlPersist = "60m";
         };
         "*" = {
-          serverAliveInterval = 60;
-          serverAliveCountMax = 3;
-          extraOptions.SetEnv = "TERM=xterm-256color";
+          ServerAliveInterval = 120;
+          ServerAliveCountMax = 3;
+          SetEnv.TERM = "xterm-256color";
         };
-        "aboutblank.ml".hostname = "192.168.207.247";
-        "renate.ml".hostname = "192.168.207.246";
-        "berghain.ml".hostname = "192.168.207.244";
-        "tresor.ml".hostname = "192.168.207.242";
-        "sisyphos.ml".hostname = "192.168.207.241";
-        "kitkat.ml".hostname = "192.168.207.239";
-        "delta-dev1.kit".hostname = "192.168.144.35";
-        "delta-emc1.kit".hostname = "172.30.0.40";
+        "aboutblank.ml".HostName = "192.168.207.247";
+        "renate.ml".HostName = "192.168.207.246";
+        "berghain.ml".HostName = "192.168.207.244";
+        "tresor.ml".HostName = "192.168.207.242";
+        "sisyphos.ml".HostName = "192.168.207.241";
+        "kitkat.ml".HostName = "192.168.207.239";
+        "delta-dev1.kit".HostName = "192.168.144.35";
+        "delta-emc1.kit".HostName = "172.30.0.40";
       };
-      extraConfig = "ServerAliveInterval 120";
     };
 
     aerospace = {

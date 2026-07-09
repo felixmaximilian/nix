@@ -115,7 +115,7 @@
       enable = true;
       git = {
         enable = true;
-        diffToolMode = true;
+        mode = "both";
       };
     };
 
@@ -278,6 +278,38 @@
         use custom-completions/ssh/ssh-completions.nu *
         use custom-completions/uv/uv-completions.nu *
         use custom-completions/zellij/zellij-completions.nu *
+
+        # On-demand SSH port forwards via the ControlMaster connection.
+        # fwd delta-dev1.kit 8080            # local 8080 -> remote 8080
+        # fwd delta-dev1.kit 18080 8080      # local 18080 -> remote 8080
+        # unfwd delta-dev1.kit 8080          # release the local port
+        def fwd [host: string, port: int, remote_port?: int] {
+          let rp = $remote_port | default $port
+          if (do { ^ssh -O check $host } | complete | get exit_code) != 0 {
+            ^ssh -fN $host
+          }
+          ^ssh -O forward -L $"($port):localhost:($rp)" $host
+        }
+
+        def unfwd [host: string, port: int, remote_port?: int] {
+          let rp = $remote_port | default $port
+          ^ssh -O cancel -L $"($port):localhost:($rp)" $host
+        }
+
+        # Reverse tunnel: expose a local port on the remote host.
+        # rfwd renate.ml 9876                # remote 9876 -> local 9876
+        def rfwd [host: string, port: int, local_port?: int] {
+          let lp = $local_port | default $port
+          if (do { ^ssh -O check $host } | complete | get exit_code) != 0 {
+            ^ssh -fN $host
+          }
+          ^ssh -O forward -R $"($port):localhost:($lp)" $host
+        }
+
+        def unrfwd [host: string, port: int, local_port?: int] {
+          let lp = $local_port | default $port
+          ^ssh -O cancel -R $"($port):localhost:($lp)" $host
+        }
       '';
     };
 
