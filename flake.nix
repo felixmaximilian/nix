@@ -29,6 +29,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    deploy-rs = {
+      url = "github:serokell/deploy-rs?shallow=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # TODO: https://github.com/NixOS/nixpkgs/pull/484661
     lumen = {
       url = "github:jnsahaj/lumen?shallow=1";
@@ -73,6 +78,7 @@
       home-manager,
       llm-agents,
       claude-code,
+      deploy-rs,
       lumen,
       stylix,
       treefmt-nix,
@@ -203,6 +209,25 @@
           ];
         }
       );
+
+      deploy = {
+        sshUser = user;
+        remoteBuild = true;
+        nodes =
+          let
+            mkDeltaNode = hostname: {
+              inherit hostname;
+              profiles.home = {
+                inherit user;
+                path = deploy-rs.lib.aarch64-linux.activate.home-manager self.homeConfigurations."aarch64-linux";
+              };
+            };
+          in
+          {
+            delta-emc1 = mkDeltaNode "delta-emc1.kit";
+            delta-dev1 = mkDeltaNode "delta-dev1.kit";
+          };
+      };
 
       formatter = eachSystem (pkgs: treefmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.wrapper);
       checks = eachSystem (pkgs: {
