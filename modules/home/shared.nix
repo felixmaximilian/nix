@@ -310,6 +310,30 @@
           let lp = $local_port | default $port
           ^ssh -O cancel -R $"($port):localhost:($lp)" $host
         }
+
+        # Overview of active local (-L) forwards, resolved from ssh mux listeners.
+        # Only local forwards are visible here; reverse (-R) forwards listen on
+        # the remote host, and the remote port of each -L is not observable.
+        def fwds [] {
+          ^lsof -nP -iTCP -sTCP:LISTEN
+          | lines | skip 1
+          | parse --regex '^(?<cmd>\S+)\s+(?<pid>\d+)\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+(?<name>\S+)'
+          | where cmd =~ "ssh"
+          | each { |r|
+              let host = (^ps -o args= -p $r.pid
+                | parse --regex 'master-(?<h>.+?)\.socket'
+                | get h.0?
+                | default "?"
+                | str replace --regex '^[^@]+@' ""
+                | str replace --regex ':\d+$' "")
+              {
+                host: $host
+                local_port: ($r.name | split row ":" | last | into int)
+                pid: ($r.pid | into int)
+              }
+            }
+          | sort-by host local_port
+        }
       '';
     };
 

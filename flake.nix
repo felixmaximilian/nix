@@ -226,6 +226,7 @@
           {
             delta-emc1 = mkDeltaNode "delta-emc1.kit";
             delta-dev1 = mkDeltaNode "delta-dev1.kit";
+            delta-dev2 = mkDeltaNode "delta-dev2.kit";
           };
       };
 
