@@ -83,6 +83,7 @@
         "sisyphos.ml".HostName = "192.168.207.241";
         "kitkat.ml".HostName = "192.168.207.239";
         "delta-dev1.kit".HostName = "192.168.144.35";
+        "delta-dev2.kit".HostName = "192.168.144.31";
         "delta-emc1.kit".HostName = "172.30.0.40";
       };
     };
